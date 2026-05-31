@@ -127,7 +127,7 @@ studyshare/
 - [ ] Dark mode
 
 ---
-**##Live Website
+<b>##Live Website</b>
 
 <a href="https://studyshare-omega.vercel.app"><u>StudyShare website</u></a>
 ## 📄 License
