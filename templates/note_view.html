@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ note.title }} · StudyShare</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="nav-logo">Study<span>Share</span></a>
+        <div class="nav-actions">
+            {% if logged_in %}
+            <a href="/" class="admin-badge" style="background:var(--accent);">← Dashboard</a>
+            {% else %}
+            <a href="/login" class="admin-badge" style="background:var(--accent);">Sign In</a>
+            <a href="/signup" class="submit-btn" style="padding:6px 14px;font-size:0.85rem;width:auto;display:inline-block;text-decoration:none;">Join Free</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="note-view-page">
+        <div class="note-view-card">
+            <div class="note-view-top">
+                <span class="subject-tag">{{ note.category }}</span>
+                {% if note.is_pinned %}<span class="pin-badge">📌 Featured</span>{% endif %}
+            </div>
+
+            <h1 class="note-view-title">{{ note.title }}</h1>
+
+            <div class="note-view-meta">
+                <div class="card-author">
+                    <div class="author-avatar" style="width:32px;height:32px;font-size:0.85rem;">{{ note.author_name[0].upper() }}</div>
+                    <div>
+                        <strong>{{ note.author_name }}</strong>
+                        <span style="color:var(--ink-muted);font-size:0.8rem;display:block;">Uploaded {{ note.uploaded_at }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="note-view-actions">
+                <a href="{{ url_for('download', filename=note.filename) }}" class="btn btn-download" style="max-width:200px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Download Note
+                </a>
+                <button class="btn btn-ai" onclick="openAiModal('{{ note.title }}')" style="padding:10px 18px;">✨ AI Explain This</button>
+            </div>
+
+            {% if not logged_in %}
+            <div class="join-banner">
+                <strong>📚 Want to upload your own notes?</strong>
+                <a href="/signup">Create a free account →</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- AI Modal (same as dashboard) -->
+    <div id="aiModal" class="modal-overlay" style="display:none;">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div>
+                    <h2 id="modalTitle" class="modal-title"></h2>
+                    <span id="difficultyBadge" class="difficulty-badge"></span>
+                </div>
+                <button class="modal-close" onclick="closeAiModal()">✕</button>
+            </div>
+            <div id="modalBody" class="modal-body">
+                <div class="ai-loading">
+                    <div class="spinner"></div>
+                    <p>AI is thinking...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
