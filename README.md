@@ -129,9 +129,7 @@ studyshare/
 ---
 **##Live Website
 
-
-studyshare-6r3w5coju-baavanaarvapalli20-7670s-projects.vercel.app
-
+<a href="https://studyshare-omega.vercel.app"><u>StudyShare website</u></a>
 ## 📄 License
 
 MIT License — free to use, modify, and distribute.
